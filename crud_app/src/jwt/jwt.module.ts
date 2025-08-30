@@ -1,5 +1,23 @@
-import { Module } from '@nestjs/common';
+import { Global, Module } from '@nestjs/common';
 import { JwtService } from './jwt.service';
+import { JwtModule as NestJsJwtModule } from '@nestjs/jwt';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
-@Module({ providers: [JwtService] })
+@Global()
+@Module({
+  providers: [JwtService],
+  imports: [
+    NestJsJwtModule.registerAsync({
+      imports: [ConfigModule],
+      useFactory: (configService: ConfigService) => {
+        return {
+          secretOrPrivateKey: configService.get('JWT_SECRET'),
+          signOptions: {
+            expiresIn: '14d',
+          },
+        };
+      },
+    }),
+  ],
+})
 export class JwtModule {}
