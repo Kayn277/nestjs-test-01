@@ -9,7 +9,7 @@ export class UserService {
   constructor(
     @InjectRepository(User) private usersRepository: Repository<User>,
   ) {}
-  async getUser(userId: string): Promise<Omit<User, 'password'> | null> {
+  async getUser(userId: string) {
     return this.usersRepository.findOneBy({
       userId: userId,
     });
@@ -17,5 +17,11 @@ export class UserService {
 
   async createUser(user: UserCreateDto) {
     return this.usersRepository.save(user);
+  }
+
+  async getUserByName(username: string) {
+    return this.usersRepository.findOneBy({
+      username: username,
+    });
   }
 }

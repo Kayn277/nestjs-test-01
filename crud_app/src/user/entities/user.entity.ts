@@ -13,7 +13,8 @@ export class User {
   @Index({ unique: true })
   userId: string;
 
-  @Column({ unique: true, type: 'varchar', length: 64 })
+  @Column({ type: 'varchar', length: 64 })
+  @Index({ unique: true })
   username: string;
 
   @Column('text')
