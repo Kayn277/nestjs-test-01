@@ -28,9 +28,10 @@ DATABASE_NAME=mydb
 
 ---
 
-## For Start
+## Quick start
 
 ```
+git clone https://github.com/Kayn277/nestjs-test-01.git
 docker-compose up -d
 ```
 
