@@ -16,9 +16,7 @@ async function bootstrap() {
   const config = new DocumentBuilder()
     .setTitle('NestJS Test API')
     .setDescription('Provides auth and articles description')
-    .setVersion('0.1')
-    .addTag('Articles')
-    .addTag('User')
+    .setVersion('1.0')
     .build();
 
   const documentFactory = () => SwaggerModule.createDocument(app, config);

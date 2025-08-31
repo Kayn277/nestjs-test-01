@@ -24,6 +24,8 @@ RUN npm install --omit=dev --legacy-peer-deps
 
 COPY --from=build /usr/src/app/dist ./dist
 
+ENV NODE_ENV=production
+
 EXPOSE 3000
 
 CMD ["node", "dist/main.js"]
