@@ -4,6 +4,7 @@ import { configDotenv } from 'dotenv';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { ValidationPipe } from '@nestjs/common';
 import { PasswordInterceptor } from './interceptors/password.interceptor';
+import * as cookieParser from 'cookie-parser';
 
 // import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 configDotenv();
@@ -22,6 +23,8 @@ async function bootstrap() {
 
   const documentFactory = () => SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api/docs', app, documentFactory);
+
+  app.use(cookieParser());
 
   app.useGlobalPipes(
     new ValidationPipe({

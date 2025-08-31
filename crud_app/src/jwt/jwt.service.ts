@@ -9,7 +9,7 @@ export class JwtService {
     return this.jwtService.signAsync(payload);
   }
 
-  verify(token: string) {
+  verify(token: string): Promise<JwtPayload> {
     return this.jwtService.verifyAsync(token);
   }
 }

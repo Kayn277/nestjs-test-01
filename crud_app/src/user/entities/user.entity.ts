@@ -20,6 +20,6 @@ export class User {
   @Column('text')
   password: string;
 
-  @OneToMany(() => Article, (article) => article.user)
+  @OneToMany(() => Article, (article) => article.user, { onDelete: 'CASCADE' })
   articles: Article[];
 }
