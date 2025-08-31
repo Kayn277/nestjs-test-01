@@ -1,18 +1,24 @@
 version: "3.9"
 
 services:
-  # app:
-  #   build: .
-  #   container_name: crud_app
-  #   ports:
-  #     - "3000:3000"
-  #   environment:
-  #     DATABASE_URL: "postgresql://postgres:postgres@db:5432/mydb"
-  #     REDIS_URL: "redis://redis:6379"
-  #     JWT_SECRET: "secret"
-  #   depends_on:
-  #     - db
-  #     - redis
+  app:
+    build: ./crud_app
+    container_name: crud_app
+    restart: always
+    ports:
+      - "3000:3000"
+    environment:
+      REDIS_URL: 'redis://redis:6379'
+      JWT_SECRET: 'secret'
+      NODE_ENV: 'development'
+      DATABASE_HOST: 'localhost'
+      DATABASE_USER: 'postgres'
+      DATABASE_PASSWORD: 'postgrespass'
+      DATABASE_PORT: '5432'
+      DATABASE_NAME: 'mydb'
+    depends_on:
+      - db
+      - redis
   db:
     image: postgres:17
     container_name: postgres_db

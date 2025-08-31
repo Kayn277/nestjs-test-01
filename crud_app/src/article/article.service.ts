@@ -1,4 +1,5 @@
 import {
+  Inject,
   Injectable,
   InternalServerErrorException,
   NotFoundException,
@@ -10,19 +11,44 @@ import { Repository } from 'typeorm';
 import { ArticlesFindDto } from './dto/articles-find.dto';
 import { ArticlesUpdateDto } from './dto/article.update.dto';
 import { ArticleCreateDto } from './dto/article.create.dto';
+import { CACHE_MANAGER } from '@nestjs/cache-manager';
+import { Cache } from 'cache-manager';
 
 @Injectable()
 export class ArticleService {
   constructor(
     @InjectRepository(Article) private articleRepository: Repository<Article>,
+    @Inject(CACHE_MANAGER) private cacheManager: Cache,
   ) {}
 
   async findOne(articleId: string) {
-    return this.articleRepository.findOne({ where: { articleId } });
+    const value = await this.cacheManager.get<Article>(
+      `findOne-Article-${articleId}`,
+    );
+    if (value) {
+      return value;
+    }
+    const finded = await this.articleRepository.findOne({
+      where: { articleId },
+    });
+
+    this.cacheManager
+      .set(`findOne-Article-${articleId}`, finded)
+      .catch((err) => {
+        console.log('Cache error', err);
+      });
+
+    return finded;
   }
 
   async findAll(filter: ArticlesFindDto) {
     try {
+      const findMany = await this.cacheManager.get<Article[]>(
+        `findMany-Article-${JSON.stringify(filter)}`,
+      );
+      if (findMany) {
+        return findMany;
+      }
       const queryBuilder = this.articleRepository.createQueryBuilder('article');
 
       if (filter.authorId) {
@@ -46,8 +72,15 @@ export class ArticleService {
       if (filter.publishedOrder) {
         queryBuilder.orderBy('article.publishedAt', filter.publishedOrder);
       }
+      const getMany = await queryBuilder.getMany();
 
-      return queryBuilder.getMany();
+      this.cacheManager
+        .set(`findMany-Article-${JSON.stringify(filter)}`, getMany)
+        .catch((err) => {
+          console.log('Cache error', err);
+        });
+
+      return getMany;
     } catch (e) {
       console.log(e);
       throw new InternalServerErrorException();
@@ -55,6 +88,9 @@ export class ArticleService {
   }
 
   async create(article: ArticleCreateDto, authorId: string) {
+    this.cacheManager.clear().catch((err) => {
+      console.log('Cache error', err);
+    });
     return this.articleRepository.save({
       ...article,
       publishedAt: new Date(),
@@ -74,6 +110,10 @@ export class ArticleService {
     if (findedArticle.user.userId !== authorId) {
       throw new UnauthorizedException();
     }
+
+    this.cacheManager.clear().catch((err) => {
+      console.log('Cache error', err);
+    });
 
     return this.articleRepository.update(
       {
@@ -98,6 +138,10 @@ export class ArticleService {
     if (findedArticle.user.userId !== authorId) {
       throw new UnauthorizedException();
     }
+
+    this.cacheManager.clear().catch((err) => {
+      console.log('Cache error', err);
+    });
 
     return this.articleRepository.delete({
       articleId: articleId,
