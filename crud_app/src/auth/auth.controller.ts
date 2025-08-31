@@ -8,18 +8,23 @@ import { Response } from 'express';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
   @Post('register')
-  register(@Body() user: UserCreateDto) {
+  async register(@Body() user: UserCreateDto) {
     return this.authService.register(user);
   }
 
   @Post('login')
-  login(
+  async login(
     @Body() credentials: LoginDto,
     @Res({ passthrough: true }) response: Response,
   ) {
-    this.authService
-      .login(credentials)
-      .then((token) => response.cookie('session', token).status(200).send())
-      .catch((err) => response.status(404).send(err));
+    try {
+      const token = await this.authService.login(credentials);
+      response.cookie('session', token, { httpOnly: true });
+      return response.status(200).send();
+    } catch (err) {
+      return response
+        .status(401)
+        .json({ message: 'Invalid credentials', error: err });
+    }
   }
 }

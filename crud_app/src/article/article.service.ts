@@ -30,6 +30,7 @@ export class ArticleService {
     }
     const finded = await this.articleRepository.findOne({
       where: { articleId },
+      relations: ['user'],
     });
 
     this.cacheManager
@@ -57,23 +58,27 @@ export class ArticleService {
         });
       }
       if (filter.title) {
-        queryBuilder.where('article.title = :title', { title: filter.title });
+        queryBuilder.andWhere('article.title ILIKE :title', {
+          title: `%${filter.title}%`,
+        });
       }
       if (filter.description) {
-        queryBuilder.where('article.description = :description', {
-          description: filter.description,
+        queryBuilder.andWhere('article.description ILIKE :description', {
+          description: `%${filter.description}%`,
         });
       }
       if (filter.publishedAt) {
-        queryBuilder.where('article.publishedAt = :publishedAt', {
+        queryBuilder.andWhere('article.publishedAt = :publishedAt', {
           publishedAt: filter.publishedAt,
         });
       }
       if (filter.publishedOrder) {
-        queryBuilder.orderBy('article.publishedAt', filter.publishedOrder);
+        queryBuilder.addOrderBy('article.publishedAt', filter.publishedOrder);
       }
-      const getMany = await queryBuilder.getMany();
 
+      const getMany = await queryBuilder
+        .leftJoinAndSelect('article.user', 'user')
+        .getMany();
       this.cacheManager
         .set(`findMany-Article-${JSON.stringify(filter)}`, getMany)
         .catch((err) => {
@@ -100,8 +105,8 @@ export class ArticleService {
     });
   }
 
-  async update(article: ArticlesUpdateDto, authorId: string) {
-    const findedArticle = await this.findOne(article.articleId);
+  async update(aricleId: string, article: ArticlesUpdateDto, authorId: string) {
+    const findedArticle = await this.findOne(aricleId);
 
     if (!findedArticle) {
       throw new NotFoundException();
@@ -117,7 +122,7 @@ export class ArticleService {
 
     return this.articleRepository.update(
       {
-        articleId: article.articleId,
+        articleId: findedArticle.articleId,
         user: {
           userId: authorId,
         },

@@ -1,9 +1,9 @@
-import { IsNotEmpty, IsString, Length } from 'class-validator';
+import { IsNotEmpty, IsString, MaxLength } from 'class-validator';
 import { User } from '../entities/user.entity';
 
 export class UserCreateDto implements Omit<User, 'userId' | 'articles'> {
   @IsString()
-  @Length(64)
+  @MaxLength(64)
   @IsNotEmpty()
   username: string;
 

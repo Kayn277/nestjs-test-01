@@ -1,0 +1,456 @@
+{
+	"info": {
+		"_postman_id": "b9f2672f-48de-4950-ad82-da3411afd558",
+		"name": "NestJS Test POSTMAN",
+		"description": "Provide postman schema for local testing",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "13080376",
+		"_collection_link": "https://red-flare-710545.postman.co/workspace/bfec267e-d1d1-4043-8cfc-9bba340ec9f4/collection/13080376-b9f2672f-48de-4950-ad82-da3411afd558?action=share&source=collection_link&creator=13080376"
+	},
+	"item": [
+		{
+			"name": "Register",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"user123456789\",\r\n    \"password\": \"testPassword1234578\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}:{{port}}/api/auth/register",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"testUser12345\",\r\n    \"password\": \"testPassword12345\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}:{{port}}/api/auth/login",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login Incorrect",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"testUser12345\",\r\n    \"password\": \"testPassword12345\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}:{{port}}/api/auth/login",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Find user by id",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"testUser12345\",\r\n    \"password\": \"testPassword12345\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}:{{port}}/api/user/3c130639-32fe-45a1-a204-4a498ceb2f54",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"user",
+						"3c130639-32fe-45a1-a204-4a498ceb2f54"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Article",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"Test234\",\r\n    \"description\": \"An article description...\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}:{{port}}/api/article/",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"article",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Find article by id",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"Test Article Title\",\r\n    \"description\": \"An article description...\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}:{{port}}/api/article/52877e43-d5c5-4aa6-81f4-bb547ce7913d",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"article",
+						"52877e43-d5c5-4aa6-81f4-bb547ce7913d"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Find many articles",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"Test Article Title\",\r\n    \"description\": \"An article description...\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}:{{port}}/api/article",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"article"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Find many articles Filter",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"Test Article Title\",\r\n    \"description\": \"An article description...\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}:{{port}}/api/article",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"article"
+					],
+					"query": [
+						{
+							"key": "authorId",
+							"value": "32be2a2c-25b8-4543-af82-e79aba75bfd4",
+							"disabled": true
+						},
+						{
+							"key": "description",
+							"value": null,
+							"disabled": true
+						},
+						{
+							"key": "title",
+							"value": null,
+							"disabled": true
+						},
+						{
+							"key": "publishedAt",
+							"value": null,
+							"disabled": true
+						},
+						{
+							"key": "publishedOrder",
+							"value": "ASC",
+							"description": "ASC/DESC",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"Test Article Title\",\r\n    \"description\": \"An article description...\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}:{{port}}/api/article",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"article"
+					],
+					"query": [
+						{
+							"key": "authorId",
+							"value": "32be2a2c-25b8-4543-af82-e79aba75bfd4",
+							"disabled": true
+						},
+						{
+							"key": "description",
+							"value": null,
+							"disabled": true
+						},
+						{
+							"key": "title",
+							"value": null,
+							"disabled": true
+						},
+						{
+							"key": "publishedAt",
+							"value": null,
+							"disabled": true
+						},
+						{
+							"key": "publishedOrder",
+							"value": "ASC",
+							"description": "ASC/DESC",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"Updated Title\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://{{host}}:{{port}}/api/article/40e6391e-26bf-42c0-9ce6-c1339c768b5a",
+					"protocol": "http",
+					"host": [
+						"{{host}}"
+					],
+					"port": "{{port}}",
+					"path": [
+						"api",
+						"article",
+						"40e6391e-26bf-42c0-9ce6-c1339c768b5a"
+					],
+					"query": [
+						{
+							"key": "authorId",
+							"value": "32be2a2c-25b8-4543-af82-e79aba75bfd4",
+							"disabled": true
+						},
+						{
+							"key": "description",
+							"value": null,
+							"disabled": true
+						},
+						{
+							"key": "title",
+							"value": null,
+							"disabled": true
+						},
+						{
+							"key": "publishedAt",
+							"value": null,
+							"disabled": true
+						},
+						{
+							"key": "publishedOrder",
+							"value": "ASC",
+							"description": "ASC/DESC",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "host",
+			"value": "localhost"
+		},
+		{
+			"key": "port",
+			"value": "3000"
+		},
+		{
+			"key": "userId",
+			"value": "user123456"
+		}
+	]
+}

@@ -1,12 +1,9 @@
-import { IsNotEmpty, IsOptional, IsString, Length } from 'class-validator';
+import { IsOptional, IsString, MaxLength } from 'class-validator';
 
 export class ArticlesUpdateDto {
-  @IsNotEmpty()
-  articleId: string;
-
   @IsString()
   @IsOptional()
-  @Length(255)
+  @MaxLength(255)
   title?: string;
 
   @IsString()

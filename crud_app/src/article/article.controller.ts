@@ -71,10 +71,14 @@ export class ArticleController {
   @ApiResponse({ status: 200, description: 'Article updated' })
   @ApiResponse({ status: 404, description: 'Article not found' })
   @UseGuards(AuthGuard)
-  update(@Req() req: Request, @Body() article: ArticlesUpdateDto) {
+  update(
+    @Req() req: Request,
+    @Body() article: ArticlesUpdateDto,
+    @Param('id') id: string,
+  ) {
     const userId = req.headers['userId'] as string;
     if (!userId) throw new UnauthorizedException();
-    return this.articleService.update(article, userId);
+    return this.articleService.update(id, article, userId);
   }
 
   @Post('/')

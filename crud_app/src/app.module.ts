@@ -9,11 +9,6 @@ import { AuthModule } from './auth/auth.module';
 @Module({
   imports: [DatasourceModule, JwtModule, UserModule, ArticleModule, AuthModule],
   controllers: [],
-  providers: [
-    {
-      provide: 'APP_GUARD',
-      useClass: AuthGuard,
-    },
-  ],
+  providers: [],
 })
 export class AppModule {}

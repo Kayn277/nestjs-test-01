@@ -91,7 +91,7 @@ describe('ArticleService', () => {
       repo.update?.mockResolvedValue({ affected: 1 });
 
       const dto = { articleId: '1', title: 'Updated' };
-      const result = await service.update(dto, 'user1');
+      const result = await service.update(dto.articleId, dto, 'user1');
 
       expect(repo.update).toHaveBeenCalledWith(
         { articleId: '1', user: { userId: 'user1' } },
@@ -104,7 +104,7 @@ describe('ArticleService', () => {
       repo.findOne?.mockResolvedValue(null);
 
       await expect(
-        service.update({ articleId: '99' }, 'user1'),
+        service.update('1', { title: '123' }, 'user1'),
       ).rejects.toThrow(NotFoundException);
     });
 
@@ -115,7 +115,7 @@ describe('ArticleService', () => {
       });
 
       await expect(
-        service.update({ articleId: '1', title: 'Updated' }, 'user1'),
+        service.update('1', { title: 'Updated' }, 'user1'),
       ).rejects.toThrow(UnauthorizedException);
     });
   });

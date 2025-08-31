@@ -1,4 +1,4 @@
-import { IsString, Length } from 'class-validator';
+import { IsString, MaxLength } from 'class-validator';
 import { Article } from '../entities/article.entity';
 
 export class ArticleCreateDto
@@ -14,7 +14,7 @@ export class ArticleCreateDto
     >
 {
   @IsString()
-  @Length(255)
+  @MaxLength(255)
   title: string;
 
   @IsString()
