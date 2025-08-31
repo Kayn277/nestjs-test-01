@@ -11,7 +11,7 @@ services:
       REDIS_URL: 'redis://redis:6379'
       JWT_SECRET: 'secret'
       NODE_ENV: 'development'
-      DATABASE_HOST: 'localhost'
+      DATABASE_HOST: 'db'
       DATABASE_USER: 'postgres'
       DATABASE_PASSWORD: 'postgrespass'
       DATABASE_PORT: '5432'
